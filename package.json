@@ -1,5 +1,5 @@
 {
-  "name": "vue-notify",
+  "name": "@aminoeditor/vue-notify",
   "version": "1.0.0",
   "description": "Global toast notifications for vue 3",
   "main": "dist/vue-notify.js",
@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && rollup -c"
   },
-  "author": "",
+  "author": "Eric Uldall",
   "license": "ISC",
   "devDependencies": {
     "rollup": "^2.70.2",
@@ -21,5 +21,19 @@
     "@vue/compiler-sfc": "^3.2.33",
     "node-sass": "^7.0.1",
     "uuid": "^8.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aminoeditor/vue-notify.git"
+  },
+  "keywords": [
+    "vue",
+    "notify",
+    "notifications",
+    "toasts"
+  ],
+  "bugs": {
+    "url": "https://github.com/aminoeditor/vue-notify/issues"
+  },
+  "homepage": "https://github.com/aminoeditor/vue-notify#readme"
 }
