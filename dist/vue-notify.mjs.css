@@ -1,0 +1,5 @@
+.notify-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  pointer-events: none; }
