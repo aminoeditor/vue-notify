@@ -43,12 +43,12 @@ var script = {
 			}
 		},
 		methods: {
-			notify (body, options) {
+			notify (body, options={}) {
 				const key = uuid.v4();
 				this.notifications.push({ key, body });
 				setTimeout(() => {
 					this.removeNotification(key);
-				}, this.displayMs);
+				}, options.displayMs || this.displayMs);
 			},
 			removeNotification (key) {
 				this.notifications.splice(
