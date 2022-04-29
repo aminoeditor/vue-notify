@@ -1,5 +1,7 @@
-.notify-container {
+.notify-container[data-v-05708dbf] {
+  z-index: 2147483647;
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
+  top: 0;
   pointer-events: none; }

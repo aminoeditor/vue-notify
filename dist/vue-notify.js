@@ -6,25 +6,27 @@ var uuid = require('uuid');
 var script$1 = {
 		name: 'DefaultNotification',
 		props: {
+			classPrefix: String,
 			title: String,
 			body: String
 		}
 	};
 
-const _hoisted_1$1 = { class: "notification" };
-const _hoisted_2 = {
+const _hoisted_1 = {
   key: 0,
-  class: "notification-title"
+  class: "`${classPrefix}notification-title`"
 };
-const _hoisted_3 = { class: "notification-body" };
+const _hoisted_2 = { class: "`${classPrefix}notification-body`" };
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$1, [
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(`${$props.classPrefix}notification`)
+  }, [
     ($props.title)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2, vue.toDisplayString($props.title), 1 /* TEXT */))
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1, vue.toDisplayString($props.title), 1 /* TEXT */))
       : vue.createCommentVNode("v-if", true),
-    vue.createElementVNode("div", _hoisted_3, vue.toDisplayString($props.body), 1 /* TEXT */)
-  ]))
+    vue.createElementVNode("div", _hoisted_2, vue.toDisplayString($props.body), 1 /* TEXT */)
+  ], 2 /* CLASS */))
 }
 
 script$1.render = render$1;
@@ -35,6 +37,7 @@ var script = {
 		components: { DefaultNotification: script$1 },
 		data () {
 			return {
+				classPrefix: '__vue_notify_',
 				displayMs: 5000,
 				notifications: []
 			}
@@ -56,23 +59,23 @@ var script = {
 		}
 	};
 
-const _hoisted_1 = { class: "notify-container" };
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_DefaultNotification = vue.resolveComponent("DefaultNotification");
 
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1, [
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: vue.normalizeClass(`${$data.classPrefix}notify-container`)
+  }, [
     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.notifications, (notification) => {
-      return (vue.openBlock(), vue.createElementBlock("div", null, [
-        vue.createVNode(_component_DefaultNotification, {
-          body: notification.body
-        }, null, 8 /* PROPS */, ["body"])
-      ]))
+      return (vue.openBlock(), vue.createBlock(_component_DefaultNotification, {
+        classPrefix: $data.classPrefix,
+        body: notification.body
+      }, null, 8 /* PROPS */, ["classPrefix", "body"]))
     }), 256 /* UNKEYED_FRAGMENT */))
-  ]))
+  ], 2 /* CLASS */))
 }
 
 script.render = render;
+script.__scopeId = "data-v-05708dbf";
 script.__file = "src/Notifications.vue";
 
 var index = {

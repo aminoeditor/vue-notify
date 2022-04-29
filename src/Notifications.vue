@@ -1,8 +1,11 @@
 <template>
-	<div class="notify-container">
-		<div v-for="notification in notifications">
-			<DefaultNotification :body="notification.body" />
-		</div>
+	<div :class="`${classPrefix}notify-container`">
+		<template v-for="notification in notifications">
+			<DefaultNotification
+				:classPrefix="classPrefix"
+				:body="notification.body"
+			/>
+		</template>
 	</div>
 </template>
 
@@ -14,6 +17,7 @@
 		components: { DefaultNotification },
 		data () {
 			return {
+				classPrefix: '__vue_notify_',
 				displayMs: 5000,
 				notifications: []
 			}
@@ -36,11 +40,13 @@
 	}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 	.notify-container {
+		z-index: 2147483647;
 		width: 100vw;
 		height: 100vh;
-		position: fixed;
+		position: absolute;
+		top: 0;
 		pointer-events: none;
 	}
 </style>
