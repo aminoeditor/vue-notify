@@ -28,7 +28,8 @@ export default {
 			opacity: 1,
 			visibility: 'visible',
 			y: 0,
-			delay: .2,
+			scale: 1,
+			delay: .1,
 			duration: 0.2,
 		});
 	}
@@ -44,7 +45,7 @@ export default {
 	left: 0;
 	width: 100%;
 	font-size: 14px;
-	padding: 1.5em;
+	padding: 1em;
 	pointer-events: none;
 
 	.surface {
@@ -52,14 +53,14 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		background-color: white;
+		box-shadow: 0 15px 15px -3px rgba(0, 0, 0, 0.1), 0 8px 10px 1px rgba(0, 0, 0, 0.07), 0 3px 14px 2px rgba(0, 0, 0, 0.06);
 		padding: 1em;
 		border-radius: 0.5em;
-		box-shadow: 0 15px 15px -3px rgba(0, 0, 0, 0.1), 0 8px 10px 1px rgba(0, 0, 0, 0.07), 0 3px 14px 2px rgba(0, 0, 0, 0.06);
 		pointer-events: auto;
-		min-width: 280px;
+		min-width: 300px;
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(1rem);
+		transform: scale(0.8) translateY(1rem);
 	}
 
 	.actions {
@@ -69,12 +70,18 @@ export default {
 			justify-content: center;
 			width: 2em;
 			height: 2em;
-			border-radius: 0.5em;
+			border-radius: 4em;
 			cursor: pointer;
-			border: 1px solid #e5e5e5;
-			background-color: white;
+			background: none;
+			border: 1px solid #F2F2F2;
 			&:not(:last-of-type) {
 				margin-right: 1em;
+			}
+			&:hover {
+				background-color: #F5F5F5;
+			}
+			&:active {
+				background-color: #F2F2F2;
 			}
 		}
 	}

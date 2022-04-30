@@ -16,7 +16,8 @@ var script$1 = {
 			opacity: 1,
 			visibility: 'visible',
 			y: 0,
-			delay: .2,
+			scale: 1,
+			delay: .1,
 			duration: 0.2,
 		});
 	}
@@ -67,31 +68,36 @@ script$1.render = render$1;
 script$1.__file = "src/Notifications/DefaultNotification.vue";
 
 var script = {
-		name: 'Notifications',
-		components: { DefaultNotification: script$1 },
-		data () {
-			return {
-				classPrefix: '__vue_notify_',
-				displayMs: 3000,
-				notifications: []
-			}
-		},
-		methods: {
-			notify (body, options={}) {
-				const key = uuid.v4();
-				this.notifications.push({ key, body });
-				setTimeout(() => {
-					this.removeNotification(key);
-				}, options.displayMs || this.displayMs);
-			},
-			removeNotification (key) {
-				this.notifications.splice(
-					this.notifications.findIndex(n => n.key === key),
-					1
-				);
-			}
+	name: 'Notifications',
+	components: {
+		DefaultNotification: script$1
+	},
+	data() {
+		return {
+			classPrefix: '__vue_notify_',
+			displayMs: 2500,
+			notifications: []
 		}
-	};
+	},
+	methods: {
+		notify(body, options = {}) {
+			const key = uuid.v4();
+			this.notifications.push({
+				key,
+				body
+			});
+			setTimeout(() => {
+				this.removeNotification(key);
+			}, options.displayMs || this.displayMs);
+		},
+		removeNotification(key) {
+			this.notifications.splice(
+				this.notifications.findIndex(n => n.key === key),
+				1
+			);
+		}
+	}
+};
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_DefaultNotification = vue.resolveComponent("DefaultNotification");
