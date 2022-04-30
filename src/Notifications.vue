@@ -18,7 +18,7 @@
 		data () {
 			return {
 				classPrefix: '__vue_notify_',
-				displayMs: 5000,
+				displayMs: 3000,
 				notifications: []
 			}
 		},
@@ -45,7 +45,7 @@
 		z-index: 2147483647;
 		width: 100vw;
 		height: 100vh;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		pointer-events: none;
 	}

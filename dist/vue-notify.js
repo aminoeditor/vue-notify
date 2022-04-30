@@ -2,30 +2,64 @@
 
 var vue = require('vue');
 var uuid = require('uuid');
+var gsap = require('gsap');
 
 var script$1 = {
-		name: 'DefaultNotification',
-		props: {
-			classPrefix: String,
-			title: String,
-			body: String
-		}
-	};
+	name: 'DefaultNotification',
+	props: {
+		classPrefix: String,
+		title: String,
+		body: String
+	},
+	async mounted() {
+		gsap.gsap.to(".surface", {
+			opacity: 1,
+			visibility: 'visible',
+			y: 0,
+			delay: .2,
+			duration: 0.2,
+		});
+	}
+};
 
-const _hoisted_1 = {
+const _hoisted_1 = { class: "surface" };
+const _hoisted_2 = { class: "content" };
+const _hoisted_3 = {
   key: 0,
   class: "`${classPrefix}notification-title`"
 };
-const _hoisted_2 = { class: "`${classPrefix}notification-body`" };
+const _hoisted_4 = { class: "`${classPrefix}notification-body`" };
+const _hoisted_5 = /*#__PURE__*/vue.createElementVNode("div", { class: "actions" }, [
+  /*#__PURE__*/vue.createElementVNode("button", null, [
+    /*#__PURE__*/vue.createElementVNode("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      height: "12px",
+      viewBox: "0 0 24 24",
+      width: "12px",
+      fill: "#aaaaaa"
+    }, [
+      /*#__PURE__*/vue.createElementVNode("path", {
+        d: "M0 0h24v24H0V0z",
+        fill: "none"
+      }),
+      /*#__PURE__*/vue.createElementVNode("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" })
+    ])
+  ])
+], -1 /* HOISTED */);
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
-    class: vue.normalizeClass(`${$props.classPrefix}notification`)
+    class: vue.normalizeClass(`${$props.classPrefix}notification notification`)
   }, [
-    ($props.title)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1, vue.toDisplayString($props.title), 1 /* TEXT */))
-      : vue.createCommentVNode("v-if", true),
-    vue.createElementVNode("div", _hoisted_2, vue.toDisplayString($props.body), 1 /* TEXT */)
+    vue.createElementVNode("div", _hoisted_1, [
+      vue.createElementVNode("div", _hoisted_2, [
+        ($props.title)
+          ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3, vue.toDisplayString($props.title), 1 /* TEXT */))
+          : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("div", _hoisted_4, vue.toDisplayString($props.body), 1 /* TEXT */)
+      ]),
+      _hoisted_5
+    ])
   ], 2 /* CLASS */))
 }
 
@@ -38,7 +72,7 @@ var script = {
 		data () {
 			return {
 				classPrefix: '__vue_notify_',
-				displayMs: 5000,
+				displayMs: 3000,
 				notifications: []
 			}
 		},
