@@ -1,7 +1,7 @@
 <template>
 <div :class="`${classPrefix}notify-container`">
 	<template v-for="notification in notifications">
-		<DefaultNotification :classPrefix="classPrefix" :body="notification.body" />
+		<DefaultNotification :classPrefix="classPrefix" :body="notification.body" :uuid="notification.key" @close="removeNotification"  />
 	</template>
 </div>
 </template>
@@ -26,19 +26,19 @@ export default {
 	methods: {
 		notify(body, options = {}) {
 			const key = uuidv4();
-			this.notifications.push({
+			const notification = {
 				key,
 				body
-			});
-			setTimeout(() => {
+			};
+			notification.timer = setTimeout(() => {
 				this.removeNotification(key);
 			}, options.displayMs || this.displayMs);
+			this.notifications.push(notification);
 		},
 		removeNotification(key) {
-			this.notifications.splice(
-				this.notifications.findIndex(n => n.key === key),
-				1
-			);
+			const notificationIndex = this.notifications.findIndex(n => n.key === key);
+			clearTimeout(this.notifications[notificationIndex].timer);
+			this.notifications.splice(notificationIndex, 1);
 		}
 	}
 }

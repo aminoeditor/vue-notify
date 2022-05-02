@@ -9,7 +9,8 @@ var script$1 = {
 	props: {
 		classPrefix: String,
 		title: String,
-		body: String
+		body: String,
+		uuid: String
 	},
 	async mounted() {
 		gsap.gsap.to(".surface", {
@@ -30,23 +31,23 @@ const _hoisted_3 = {
   class: "`${classPrefix}notification-title`"
 };
 const _hoisted_4 = { class: "`${classPrefix}notification-body`" };
-const _hoisted_5 = /*#__PURE__*/vue.createElementVNode("div", { class: "actions" }, [
-  /*#__PURE__*/vue.createElementVNode("button", null, [
-    /*#__PURE__*/vue.createElementVNode("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      height: "12px",
-      viewBox: "0 0 24 24",
-      width: "12px",
-      fill: "#aaaaaa"
-    }, [
-      /*#__PURE__*/vue.createElementVNode("path", {
-        d: "M0 0h24v24H0V0z",
-        fill: "none"
-      }),
-      /*#__PURE__*/vue.createElementVNode("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" })
-    ])
-  ])
+const _hoisted_5 = { class: "actions" };
+const _hoisted_6 = /*#__PURE__*/vue.createElementVNode("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  height: "12px",
+  viewBox: "0 0 24 24",
+  width: "12px",
+  fill: "#aaaaaa"
+}, [
+  /*#__PURE__*/vue.createElementVNode("path", {
+    d: "M0 0h24v24H0V0z",
+    fill: "none"
+  }),
+  /*#__PURE__*/vue.createElementVNode("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" })
 ], -1 /* HOISTED */);
+const _hoisted_7 = [
+  _hoisted_6
+];
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
@@ -59,7 +60,11 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           : vue.createCommentVNode("v-if", true),
         vue.createElementVNode("div", _hoisted_4, vue.toDisplayString($props.body), 1 /* TEXT */)
       ]),
-      _hoisted_5
+      vue.createElementVNode("div", _hoisted_5, [
+        vue.createElementVNode("button", {
+          onClick: _cache[0] || (_cache[0] = vue.withModifiers($event => (_ctx.$emit('close', $props.uuid)), ["prevent"]))
+        }, _hoisted_7)
+      ])
     ])
   ], 2 /* CLASS */))
 }
@@ -82,19 +87,19 @@ var script = {
 	methods: {
 		notify(body, options = {}) {
 			const key = uuid.v4();
-			this.notifications.push({
+			const notification = {
 				key,
 				body
-			});
-			setTimeout(() => {
+			};
+			notification.timer = setTimeout(() => {
 				this.removeNotification(key);
 			}, options.displayMs || this.displayMs);
+			this.notifications.push(notification);
 		},
 		removeNotification(key) {
-			this.notifications.splice(
-				this.notifications.findIndex(n => n.key === key),
-				1
-			);
+			const notificationIndex = this.notifications.findIndex(n => n.key === key);
+			clearTimeout(this.notifications[notificationIndex].timer);
+			this.notifications.splice(notificationIndex, 1);
 		}
 	}
 };
@@ -108,8 +113,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.notifications, (notification) => {
       return (vue.openBlock(), vue.createBlock(_component_DefaultNotification, {
         classPrefix: $data.classPrefix,
-        body: notification.body
-      }, null, 8 /* PROPS */, ["classPrefix", "body"]))
+        body: notification.body,
+        uuid: notification.key,
+        onClose: $options.removeNotification
+      }, null, 8 /* PROPS */, ["classPrefix", "body", "uuid", "onClose"]))
     }), 256 /* UNKEYED_FRAGMENT */))
   ], 2 /* CLASS */))
 }
@@ -124,7 +131,8 @@ var index = {
 		document.body.append(notificationsDiv);
 		const notifications = vue.createApp({ extends: script });
 		const vm = notifications.mount(notificationsDiv);
-		app.config.globalProperties.$notify = (...args) => {
+		const global = options?.global || 'notify';
+		app.config.globalProperties[`$${global}`] = (...args) => {
 			vm.notify(...args);
 		};
 	}

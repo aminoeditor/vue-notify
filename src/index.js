@@ -6,7 +6,8 @@ export default {
 		document.body.append(notificationsDiv);
 		const notifications = createApp({ extends: Notifications });
 		const vm = notifications.mount(notificationsDiv);
-		app.config.globalProperties.$notify = (...args) => {
+		const global = options?.global || 'notify';
+		app.config.globalProperties[`$${global}`] = (...args) => {
 			vm.notify(...args);
 		}
 	}
