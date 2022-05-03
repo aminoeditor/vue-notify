@@ -8,16 +8,47 @@ var script$1 = {
 		classPrefix: String,
 		title: String,
 		body: String,
-		uuid: String
+		uuid: String,
+		timeout: Number
+	},
+	data () {
+		return {
+			timer: null
+		}
+	},
+	computed: {
+		surfaceEl () {
+			return this.$el.getElementsByClassName('surface')[0];
+		}
+	},
+	methods: {
+		close () {
+			gsap.to(this.surfaceEl, {
+				opacity: 0,
+				visibility: 'visible',
+				y: 0,
+				scale: 0,
+				delay: .1,
+				duration: 0.2,
+				onComplete: async () => {
+					await this.$nextTick();
+					clearTimeout(this.timer);
+					this.$emit('close', this.uuid);
+				}
+			});
+		}
 	},
 	async mounted() {
-		gsap.to(".surface", {
+		gsap.to(this.surfaceEl, {
 			opacity: 1,
 			visibility: 'visible',
 			y: 0,
 			scale: 1,
 			delay: .1,
 			duration: 0.2,
+			onComplete: () => {
+				this.timer = setTimeout(this.close, this.timeout);
+			}
 		});
 	}
 };
@@ -60,7 +91,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
       ]),
       createElementVNode("div", _hoisted_5, [
         createElementVNode("button", {
-          onClick: _cache[0] || (_cache[0] = withModifiers($event => (_ctx.$emit('close', $props.uuid)), ["prevent"]))
+          onClick: _cache[0] || (_cache[0] = withModifiers((...args) => ($options.close && $options.close(...args)), ["prevent"]))
         }, _hoisted_7)
       ])
     ])
@@ -87,16 +118,13 @@ var script = {
 			const key = v4();
 			const notification = {
 				key,
-				body
+				body,
+				timeout: options.displayMs || this.displayMs
 			};
-			notification.timer = setTimeout(() => {
-				this.removeNotification(key);
-			}, options.displayMs || this.displayMs);
 			this.notifications.push(notification);
 		},
 		removeNotification(key) {
 			const notificationIndex = this.notifications.findIndex(n => n.key === key);
-			clearTimeout(this.notifications[notificationIndex].timer);
 			this.notifications.splice(notificationIndex, 1);
 		}
 	}
@@ -112,9 +140,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (openBlock(), createBlock(_component_DefaultNotification, {
         classPrefix: $data.classPrefix,
         body: notification.body,
+        timeout: notification.timeout,
         uuid: notification.key,
         onClose: $options.removeNotification
-      }, null, 8 /* PROPS */, ["classPrefix", "body", "uuid", "onClose"]))
+      }, null, 8 /* PROPS */, ["classPrefix", "body", "timeout", "uuid", "onClose"]))
     }), 256 /* UNKEYED_FRAGMENT */))
   ], 2 /* CLASS */))
 }
