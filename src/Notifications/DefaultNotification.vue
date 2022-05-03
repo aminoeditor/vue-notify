@@ -36,7 +36,8 @@ export default {
 		}
 	},
 	methods: {
-		close () {
+		async close () {
+			await this.$nextTick();
 			gsap.to(this.surfaceEl, {
 				opacity: 0,
 				visibility: 'visible',

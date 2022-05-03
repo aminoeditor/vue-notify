@@ -22,7 +22,8 @@ var script$1 = {
 		}
 	},
 	methods: {
-		close () {
+		async close () {
+			await this.$nextTick();
 			gsap.to(this.surfaceEl, {
 				opacity: 0,
 				visibility: 'visible',
@@ -114,16 +115,18 @@ var script = {
 		}
 	},
 	methods: {
-		notify(body, options = {}) {
+		async notify(body, options = {}) {
 			const key = v4();
 			const notification = {
 				key,
 				body,
 				timeout: options.displayMs || this.displayMs
 			};
+			await this.$nextTick();
 			this.notifications.push(notification);
 		},
-		removeNotification(key) {
+		async removeNotification(key) {
+			await this.$nextTick();
 			const notificationIndex = this.notifications.findIndex(n => n.key === key);
 			this.notifications.splice(notificationIndex, 1);
 		}

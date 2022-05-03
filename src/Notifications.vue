@@ -30,16 +30,18 @@ export default {
 		}
 	},
 	methods: {
-		notify(body, options = {}) {
+		async notify(body, options = {}) {
 			const key = uuidv4();
 			const notification = {
 				key,
 				body,
 				timeout: options.displayMs || this.displayMs
 			};
+			await this.$nextTick();
 			this.notifications.push(notification);
 		},
-		removeNotification(key) {
+		async removeNotification(key) {
+			await this.$nextTick();
 			const notificationIndex = this.notifications.findIndex(n => n.key === key);
 			this.notifications.splice(notificationIndex, 1);
 		}
