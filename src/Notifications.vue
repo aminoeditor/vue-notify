@@ -32,7 +32,6 @@ export default {
 	methods: {
 		async notify(body, options = {}) {
 			const key = uuidv4();
-			console.log(key);
 			const notification = {
 				body,
 				timeout: options.displayMs || this.displayMs
