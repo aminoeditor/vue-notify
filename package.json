@@ -1,6 +1,6 @@
 {
   "name": "@aminoeditor/vue-notify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Global toast notifications for vue 3",
   "main": "dist/vue-notify.js",
   "module": "dist/vue-notify.mjs",
