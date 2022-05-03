@@ -111,24 +111,23 @@ var script = {
 		return {
 			classPrefix: '__vue_notify_',
 			displayMs: 2500,
-			notifications: []
+			notifications: new Map()
 		}
 	},
 	methods: {
 		async notify(body, options = {}) {
 			const key = v4();
+			console.log(key);
 			const notification = {
-				key,
 				body,
 				timeout: options.displayMs || this.displayMs
 			};
 			await this.$nextTick();
-			this.notifications.push(notification);
+			this.notifications.set(key, notification);
 		},
 		async removeNotification(key) {
 			await this.$nextTick();
-			const notificationIndex = this.notifications.findIndex(n => n.key === key);
-			this.notifications.splice(notificationIndex, 1);
+			delete this.notifications.delete(key);
 		}
 	}
 };
@@ -139,15 +138,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
     class: normalizeClass(`${$data.classPrefix}notify-container`)
   }, [
-    (openBlock(true), createElementBlock(Fragment, null, renderList($data.notifications, (notification) => {
+    (openBlock(true), createElementBlock(Fragment, null, renderList($data.notifications, ([key, notification]) => {
       return (openBlock(), createBlock(_component_DefaultNotification, {
         classPrefix: $data.classPrefix,
         body: notification.body,
         timeout: notification.timeout,
-        uuid: notification.key,
+        uuid: key,
+        key: key,
         onClose: $options.removeNotification
       }, null, 8 /* PROPS */, ["classPrefix", "body", "timeout", "uuid", "onClose"]))
-    }), 256 /* UNKEYED_FRAGMENT */))
+    }), 128 /* KEYED_FRAGMENT */))
   ], 2 /* CLASS */))
 }
 
