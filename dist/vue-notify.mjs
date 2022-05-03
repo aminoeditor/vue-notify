@@ -117,7 +117,6 @@ var script = {
 	methods: {
 		async notify(body, options = {}) {
 			const key = v4();
-			console.log(key);
 			const notification = {
 				body,
 				timeout: options.displayMs || this.displayMs
@@ -140,13 +139,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [
     (openBlock(true), createElementBlock(Fragment, null, renderList($data.notifications, ([key, notification]) => {
       return (openBlock(), createBlock(_component_DefaultNotification, {
-        classPrefix: $data.classPrefix,
         body: notification.body,
+        classPrefix: $data.classPrefix,
+        key: key,
         timeout: notification.timeout,
         uuid: key,
-        key: key,
         onClose: $options.removeNotification
-      }, null, 8 /* PROPS */, ["classPrefix", "body", "timeout", "uuid", "onClose"]))
+      }, null, 8 /* PROPS */, ["body", "classPrefix", "timeout", "uuid", "onClose"]))
     }), 128 /* KEYED_FRAGMENT */))
   ], 2 /* CLASS */))
 }
