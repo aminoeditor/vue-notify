@@ -41,8 +41,8 @@ export default {
 			gsap.to(this.surfaceEl, {
 				opacity: 0,
 				visibility: 'visible',
-				y: 0,
-				scale: 0,
+				y: 16,
+				scale: 0.8,
 				delay: .1,
 				duration: 0.2,
 				onComplete: async () => {
