@@ -1,6 +1,6 @@
 {
   "name": "@aminoeditor/vue-notify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Minimalist global notifications for your Vue 3 application",
   "main": "dist/vue-notify.js",
   "module": "dist/vue-notify.mjs",
