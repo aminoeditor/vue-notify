@@ -29,7 +29,6 @@ var script$1 = {
 				visibility: 'visible',
 				y: 16,
 				scale: 0.8,
-				delay: .1,
 				duration: 0.2,
 				onComplete: async () => {
 					await this.$nextTick();
