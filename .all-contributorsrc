@@ -14,6 +14,15 @@
         "code",
         "design"
       ]
+    },
+    {
+      "login": "ericuldall",
+      "name": "Eric Uldall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3223296?v=4",
+      "profile": "https://aminoeditor.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
